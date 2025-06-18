@@ -1,32 +1,16 @@
 name: Update Playlist
 on:
   schedule:
-    - cron: '0 3 * * *'
-  workflow_dispatch:
+    - cron: '0 3 * * *'  # Executa diariamente às 3h UTC
+  workflow_dispatch:  # Permite acionar manualmente
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Criar xmltv.xml de exemplo
+      - name: Run Update Script
         run: |
-          echo '<?xml version="1.0" encoding="UTF-8"?>
-          <tv>
-            <channel id="canal1">
-              <display-name>Canal Um</display-name>
-              <url>http://stream.canalum.com/playlist.m3u8</url>
-              <icon src="http://stream.canalum.com/logo.png"/>
-            </channel>
-            <channel id="canal2">
-              <display-name>Canal Dois</display-name>
-              <url>http://stream.canaldois.com/playlist.m3u8</url>
-            </channel>
-          </tv>' > xmltv.xml
-
-      - name: Rodar script de atualização
-        run: python atualizar_playlist.py
-
+          python3 atualizar_playlist.py  # Substitua pelo seu script
       - name: Commit Changes
         run: |
           git config --global user.name "SeuNome"
