@@ -1,0 +1,20 @@
+name: Update Playlist
+on:
+  schedule:
+    - cron: '0 3 * * *'  # Executa diariamente às 3h UTC
+  workflow_dispatch:  # Permite acionar manualmente
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Update Script
+        run: |
+          python atualizar_playlist.py  # Substitua pelo seu script
+      - name: Commit Changes
+        run: |
+          git config --global user.name "SeuNome"
+          git config --global user.email "email@exemplo.com"
+          git add playlist.m3u
+          git commit -m "Atualização automática da playlist"
+          git push
